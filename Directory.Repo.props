@@ -1,0 +1,8 @@
+﻿<Project>
+    <PropertyGroup>
+        <GameDirectory>C:\Path\To\REPO\</GameDirectory>
+        <GaleProfileName>Default</GaleProfileName>
+        <BepInExDirectory>$(AppData)\com.kesomannen.gale\repo\profiles\$(GaleProfileName)\BepInEx</BepInExDirectory>
+        <StartArguments>--doorstop-enable true --doorstop-target "$(BepInExDirectory)\core\BepInEx.Preloader.dll" --gale-profile "$(GaleProfileName)"</StartArguments>
+    </PropertyGroup>
+</Project>
