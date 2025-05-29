@@ -1,0 +1,9 @@
+﻿{
+  "name": "Coinflip",
+  "version_number": "1.0.0",
+  "description": "A simple way to gamble your money away.",
+  "website_url": "https://discord.gg/M2tkaAdm",
+  "dependencies": [
+    "Zehs-REPOLib-2.1.0"
+  ]
+}
