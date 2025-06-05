@@ -29,7 +29,9 @@ public class CoinFlipCommand
         Coinflip.Logger.LogDebug($"[CoinFlip] IsMasterClient: {isMasterClient} | IsMultiplayer: {isMultiplayer} | PlayerName: {avatar.playerName}");
 
         // Checking to see if the user is in the shop or not
-        if (!SemiFunc.RunIsShop())
+        var shopOnlyGambling = Coinflip.Instance.ShopOnly.Value; 
+        
+        if (shopOnlyGambling && !SemiFunc.RunIsShop())
         {
             Coinflip.Logger.LogInfo("[CoinFlip] Player is not in the shop.");
             SendPrivateChatMessage(message: "I can only coin flip in the shop");
