@@ -11,18 +11,12 @@ namespace Coinflip;
 
 public class CoinFlipCommand
 {
-    [CommandInitializer]
-    public static void Initialize()
-    {
-       
-    }
-
-    [CommandExecution("coinflip", "Gamble your money by flipping a coin. Try /cf 1k tails", true, false)]
+    [CommandExecution("coinflip", "Gamble your money by flipping a coin. Try /cf 1k h", true, false)]
     [CommandAlias("cf")]
     [CommandAlias("coinflip")]
     public static async Task Execute(string args)
     {
-        var timeToDelay = 3_200;
+        const int timeToDelay = 3_200;
         var avatar = PlayerAvatar.instance;
         var isMasterClient = PhotonNetwork.IsMasterClient;
         var isMultiplayer = SemiFunc.IsMultiplayer();
@@ -121,6 +115,7 @@ public class CoinFlipCommand
                       (!isHeads && selection.ToLower() == "tails") || (!isHeads && selection.ToLower() == "t");
 
         
+        
         var messageToSend = userWon ? $"I won {amount}k from coin flipping" : $"I lost {amount}k from coin flipping";
         
         
@@ -184,10 +179,14 @@ public class CoinFlipCommand
         PlayerAvatar.instance.ChatMessageSpeak(message, isCrouching);
     }
 
+
     /// <summary>
-    /// Makes the player speak to everyone(Others can hear what they say)
+    /// Sends a public chat message in the game, visible and audible to all players near the player
     /// </summary>
-    /// <param name="message"></param>
+    /// <param name="message">The content of the message to be sent. Defaults to "I forgot what I was going to say".</param>
+    /// <param name="possessChat">The color the semi-bots eyes should glow.</param>
+    /// <param name="sendInTaxmanChat">Specifies whether the message should be sent in the taxman chat.</param>
+    /// <param name="color">The color of the message text. Defaults to the Unity default color.</param>
     private static void SendPublicChatMessage(string message = "I forgot what I was going to say", ChatManager.PossessChatID possessChat = ChatManager.PossessChatID.SelfDestruct,
         bool sendInTaxmanChat = false, Color color = default)
     {
