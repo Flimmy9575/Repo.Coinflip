@@ -45,8 +45,36 @@ public class CoinFlipCommand
 
         var totalCurrency = SemiFunc.StatGetRunCurrency();
         var amount = ConvertBetAmountToInteger(amountAsText);
+        var minBetAmount = Coinflip.Instance.MinBetAmount.Value;
+        var maxBetAmount = Coinflip.Instance.MaxBetAmount.Value;
         Coinflip.Logger.LogDebug($"[CoinFlip] TotalCurrency: {totalCurrency} | Amount: {amount} | Selection: {selection}");
-
+        Coinflip.Logger.LogDebug($"[CoinFlip] MinBetAmount: {minBetAmount} | MaxBetAmount: {maxBetAmount}");
+        
+        
+        if (amount < minBetAmount || amount > maxBetAmount)
+        {
+            if (isMultiplayer)
+            {
+                SendPublicChatMessage($"The minimum I can bet is {minBetAmount}", ChatManager.PossessChatID.SelfDestruct, false, Color.red);;
+                return;
+            }
+            
+            SendPrivateChatMessage($"The minimum I can bet is {minBetAmount}");
+            
+            return;
+        }
+        if (amount > maxBetAmount)
+        {
+            if (isMultiplayer)
+            {
+                SendPublicChatMessage($"The maximum I can bet is {maxBetAmount}", ChatManager.PossessChatID.SelfDestruct, false, Color.red);;
+                return;
+            }
+            
+            SendPrivateChatMessage($"The maximum I can bet is {maxBetAmount}");
+            return;
+        }
+        
         // Check if the amount is valid
         if (amount < 1)
         {
