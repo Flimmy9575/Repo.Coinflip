@@ -1,4 +1,5 @@
 ﻿using BepInEx;
+using BepInEx.Configuration;
 using BepInEx.Logging;
 using ExitGames.Client.Photon;
 using HarmonyLib;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace Coinflip;
 
-[BepInPlugin("NotDrunkJustHigh.Coinflip", "Coinflip", "1.0.0")]
+[BepInPlugin("NotDrunkJustHigh.Coinflip", "Coinflip", "1.1.0")]
 public class Coinflip : BaseUnityPlugin
 {
     internal static Coinflip Instance { get; private set; } = null!;
@@ -16,9 +17,36 @@ public class Coinflip : BaseUnityPlugin
     private ManualLogSource _logger => base.Logger;
     internal Harmony? Harmony { get; set; }
     public static NetworkedEvent AddOrRemoveMoneyEvent;
+    
+    // Config related
+    public ConfigEntry<bool> ShopOnly;
+    
+    public ConfigEntry<int> MaxBetAmount;
+    public ConfigEntry<int> MinBetAmount;
+    
+    public ConfigEntry<bool> TaxEnabled;
+    public ConfigEntry<float> TaxAmount;
 
     private void Awake()
     {
+        const string generalCategory = "General";
+        const string betLimitingCategory = "Bet Limitations";
+        const string taxCategory = "Taxes";
+
+        ShopOnly = Config.Bind(generalCategory, "Shop Only", true, "Whether you can flip coins only within the shop");
+
+        // These represent thousands
+        const int defaultMinimumBet = 1; // 1,000
+        const int defaultMaximumBet = 1_000; // 1,000,000
+        const float defaultTaxPercentage = 0.1f; // 10%
+        
+        MaxBetAmount = Config.Bind(betLimitingCategory, "Max Bet Amount", defaultMaximumBet, "The maximum amount of money that can be bet. 1 is equal 1,000(100 would set a max of 100,000) ");
+        MinBetAmount = Config.Bind(betLimitingCategory, "Min Bet Amount", defaultMinimumBet, "The minimum amount of money that can be bet. 1 is equal 1,000");
+        
+        TaxEnabled = Config.Bind(taxCategory, "Tax Enabled", false, "Whether or not tax is enabled");
+        TaxAmount = Config.Bind(taxCategory, "Tax Amount", defaultTaxPercentage, "The amount of money that is taxed on every win");
+
+
         Instance = this;
 
         // Prevent the plugin from being deleted
