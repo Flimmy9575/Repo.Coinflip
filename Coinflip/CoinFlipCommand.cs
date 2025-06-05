@@ -99,7 +99,18 @@ public class CoinFlipCommand
 
         
         var messageToSend = userWon ? $"I won {amount}k from coin flipping" : $"I lost {amount}k from coin flipping";
+        
+        
+        if (Coinflip.Instance.TaxEnabled.Value && userWon)
+        {
+            var taxPercent = Coinflip.Instance.TaxAmount.Value;
+            Coinflip.Logger.LogDebug("[CoinFlip] Tax enabled with a tax percent of ${taxPercent}");
+            var taxAmount = (int)(amount * taxPercent);
 
+            amount -= taxAmount;
+            Coinflip.Logger.LogDebug($"[CoinFlip] Total Tax: {taxAmount} | new amount: {amount}");
+        }
+        
 
         if (SemiFunc.IsMultiplayer())
         {
