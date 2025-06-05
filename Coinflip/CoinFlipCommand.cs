@@ -34,15 +34,24 @@ public class CoinFlipCommand
         if (shopOnlyGambling && !SemiFunc.RunIsShop())
         {
             Coinflip.Logger.LogInfo("[CoinFlip] Player is not in the shop.");
-            SendPrivateChatMessage(message: "I can only coin flip in the shop");
+
+            const string coinFlipShopMessage = "I can only coin flip in the shop";
+            if (isMultiplayer)
+            {
+                SendPublicChatMessage(coinFlipShopMessage, ChatManager.PossessChatID.SelfDestruct, false, Color.yellow);
+                return;
+            }
+            
+            SendPrivateChatMessage(coinFlipShopMessage);
             return;
         }
+
 
         // Parse the arguments
         var amountAsText = args.Split(' ')[0];
         var selection = args.Split(' ')[1];
-
-
+        
+        
         var totalCurrency = SemiFunc.StatGetRunCurrency();
         var amount = ConvertBetAmountToInteger(amountAsText);
         var minBetAmount = Coinflip.Instance.MinBetAmount.Value;
@@ -79,13 +88,27 @@ public class CoinFlipCommand
         if (amount < 1)
         {
             Coinflip.Logger.LogInfo("[CoinFlip] Invalid amount");
-            SendPrivateChatMessage(message: "I can only flip coins with 1k or more");
+
+            if (isMultiplayer)
+            {
+                SendPublicChatMessage($"I can only flip {minBetAmount}k or more", ChatManager.PossessChatID.SelfDestruct, false, Color.red);
+                return;
+            }
+            
+            SendPrivateChatMessage(message: $"I can only flip {minBetAmount}k or more");
             return;
         }
 
         if (amount > totalCurrency)
         {
             Coinflip.Logger.LogInfo("[CoinFlip] Not enough money");
+
+            if (isMultiplayer)
+            {
+                SendPublicChatMessage("We don't have enough money", ChatManager.PossessChatID.SelfDestruct, false, Color.red);
+                return;
+            }
+            
             SendPrivateChatMessage(message: "I don't have enough money");
             return;
         }
@@ -125,8 +148,10 @@ public class CoinFlipCommand
             {
                 Coinflip.Logger.LogDebug("[CoinFlip] User is host. modifying directly");
                 SemiFunc.StatSetRunCurrency(totalCurrency + (userWon ? amount : -amount));
+                
                 await Task.Delay(timeToDelay);
                 SendPublicChatMessage(messageToSend, userWon ? ChatManager.PossessChatID.SelfDestructCancel : ChatManager.PossessChatID.SelfDestruct, true, Color.gray);
+                
                 return;
             }
             // Handling if multiplayer and not host
