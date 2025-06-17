@@ -11,14 +11,16 @@ The syntax is `/coinflip amount heads/tails` an example is `/coinflip 5000 tails
 /cf 5k tails
 /coinflip 5m h
 ```
+#### Super Flips
+Super flips allow you to flip multiple coins at once for a chance to win more money. To do a super flip you can execute the following command `/cf amount choice(heads/tails) superflipcount` ex. `/cf 1k h 10` If you won this even though it's like a 1% chance you could win 25k. Losing will result in you still only losing the initial bet, in this case `1k`.
 
-
+---
 ### Configuration
 There are a few different options that can be changed in the config file.
 
 Here is the config file: 
 ```toml
-## Settings file was created by plugin Coinflip v1.1.0
+## Settings file was created by plugin Coinflip v2.0.0
 ## Plugin GUID: NotDrunkJustHigh.Coinflip
 
 [Bet Limitations]
@@ -40,6 +42,23 @@ Min Bet Amount = 1
 # Default value: true
 Shop Only = true
 
+[Super Flips]
+
+## Whether or not super flips are enabled
+# Setting type: Boolean
+# Default value: true
+Super Flips Enabled = true
+
+## The maximum amount of super flips that can be played
+# Setting type: Int32
+# Default value: 5
+Super Flips Max = 15
+
+## The multiplier per flip that is applied to the amount of money won on a super flip
+# Setting type: Single
+# Default value: 2.75
+Super Flips Multiplier = 2.75
+
 [Taxes]
 
 ## Whether or not tax is enabled
@@ -52,19 +71,23 @@ Tax Enabled = false
 # Default value: 0.1
 Tax Amount = 0.1
 ```
-
+---
 
 
 
 ### Roadmap
-- [ ] **[1.2.0]** Flip Upgrades
+- [ ] **[2.0.0]** Super Flips
+  - Adds Super Flips
+  - Sync Config
+  - Detailed Errors(I should've did it before but, I'm lazy)
+- [ ] **[2.1.0]** Flip Upgrades
   - This includes configuration options
   - [ ] The ability to charge an amount of money for the upgrade (This will scale similar to the shop)
   - [ ] The ability to change how many are loss and gained (default is 2 removed on a loss and 1 gained on a win)
-- [ ] **[1.3.0]** A scoreboard in the shop for flips
+- [ ] **[2.2.0]** A scoreboard in the shop for flips
   - A list of all the users and how many flips they've won/loss and how much money they've earned/lost
   - [Optional] A coin hat for who has won the most flips and money
-- [ ] **[1.4.0]** Host perms & Code rework
+- [ ] **[2.3.0]** Host perms & Code rework
   - This upgrade would simply allow the host to have a lot more control over the mod
     - Host only
     - Limit how much money can be flipped
