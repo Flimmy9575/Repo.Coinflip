@@ -1,5 +1,17 @@
 # Changelog
 
+### 2.0.0
+```diff
++ Added Super Flips(Check readme for info)
++ Added Super Flip Config Options
++ Fixed an oversight of not syncing the clients config options
+    - Every 30 seconds while in the shop the master client will send the config data to all other clients
++ Added more descriptive errors
++ Cleaned up code
+```
+
+
+
 ### 1.1.0
 Added a few basic features that allow for customizing the mod.
 ```diff
