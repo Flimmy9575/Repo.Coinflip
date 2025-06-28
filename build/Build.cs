@@ -14,9 +14,9 @@ using Octokit;
 using Octokit.Internal;
 using Serilog;
 
-[GitHubActions("continuous", GitHubActionsImage.UbuntuLatest, On = [GitHubActionsTrigger.Push, GitHubActionsTrigger.PullRequest], InvokedTargets = ["Compile"],AutoGenerate = true)]
-[GitHubActions("bumpVersion", GitHubActionsImage.UbuntuLatest, On = [GitHubActionsTrigger.PullRequest], EnableGitHubToken = true, InvokedTargets = ["BumpVersion"],AutoGenerate = true)]
-[GitHubActions("publish", GitHubActionsImage.UbuntuLatest, On = [GitHubActionsTrigger.PullRequest], EnableGitHubToken = true, InvokedTargets = ["CreateRelease", "PublishToThunderStore"],AutoGenerate = true)]
+[GitHubActions("continuous", GitHubActionsImage.WindowsLatest, On = [GitHubActionsTrigger.Push, GitHubActionsTrigger.PullRequest], InvokedTargets = ["Compile"],AutoGenerate = true)]
+[GitHubActions("bumpVersion", GitHubActionsImage.WindowsLatest, On = [GitHubActionsTrigger.PullRequest], EnableGitHubToken = true, InvokedTargets = ["BumpVersion"],AutoGenerate = true)]
+[GitHubActions("publish", GitHubActionsImage.WindowsLatest, On = [GitHubActionsTrigger.PullRequest], EnableGitHubToken = true, InvokedTargets = ["CreateRelease", "PublishToThunderStore"],AutoGenerate = true)]
 class Build : NukeBuild
 {
     [GitRepository] readonly GitRepository Repository;
