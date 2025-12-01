@@ -1,5 +1,4 @@
 # Changelog
-
 ### 2.0.0
 ```diff
 + Added Super Flips(Check readme for info)
@@ -9,9 +8,6 @@
 + Added more descriptive errors
 + Cleaned up code
 ```
-
-
-
 ### 1.1.0
 Added a few basic features that allow for customizing the mod.
 ```diff
@@ -22,5 +18,6 @@ Added a few basic features that allow for customizing the mod.
 = Flipping results _should_ appear in taxman chat now.
 ```
 
+---
 ### 1.0.0
 Initial release.
